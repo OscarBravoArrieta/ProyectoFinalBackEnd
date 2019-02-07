@@ -10,6 +10,8 @@ $.fn.scrollEnd = function(callback, timeout) {
     $this.data('scrollTimeout', setTimeout(callback,timeout));
   });
 };
+
+
 /*
   Función que inicializa el elemento Slider
 */
@@ -28,6 +30,7 @@ function inicializarSlider(){
 /*
   Función que reproduce el video de fondo al hacer scroll, y deteiene la reproducción al detener el scroll
 */
+
 function playVideoOnScroll(){
   var ultimoScroll = 0,
       intervalRewind;
