@@ -47,18 +47,30 @@
          var precioFinal = parseInt($('.irs-to').text().trim().replace( /[\s$]+/g, '' ))
          console.log("Ciudad: " + ciudad + ". Tipo: " + tipo)         
          console.log("Precio inicial: " + precioInicial + " PrecioFinal: " + precioFinal);
-
          $.ajax({url : "./php/suministrarDatos.php",                 
                  dataType: "text",
                  success : function (data){
                      var obj = jQuery.parseJSON(data)
+                     
                      if(tipoConsulta == 2){
                          obj=obj.filter(function(item){
-                             return item.Ciudad == ciudad && 
-                                    item.Tipo == tipo && 
-                                    parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) >= precioInicial && 
-                                    parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) <= precioFinal //Quita las comas,los espacios y los signos de pesos de una cadena de caracteres: parseInt(("$30,600").trim().replace( /[\s$,]+/g, '' ) )
-                         })
+                             if(ciudad != null && tipo != null){
+                                return item.Ciudad == ciudad &&
+                                item.Tipo == tipo &&
+                                parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) >= precioInicial && 
+                                parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) <= precioFinal //Quita las comas,los espacios y los signos de pesos de una cadena de caracteres: parseInt(("$30,600").trim().replace( /[\s$,]+/g, '' ) )
+                             }
+                             if(ciudad != null && tipo == null){
+                                return item.Ciudad == ciudad &&
+                                parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) >= precioInicial && 
+                                parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) <= precioFinal //Quita las comas,los espacios y los signos de pesos de una cadena de caracteres: parseInt(("$30,600").trim().replace( /[\s$,]+/g, '' ) )
+                             } 
+                             if(ciudad == null && tipo != null){
+                                return item.Tipo == tipo &&
+                                parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) >= precioInicial && 
+                                parseInt((item.Precio).trim().replace( /[\s$,]+/g, '')) <= precioFinal //Quita las comas,los espacios y los signos de pesos de una cadena de caracteres: parseInt(("$30,600").trim().replace( /[\s$,]+/g, '' ) )
+                             }                                                         
+                          })
                      }
                      $(".contenido_res").empty()
                      obj.forEach(function(item, index) {                         
