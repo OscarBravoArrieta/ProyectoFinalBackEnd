@@ -10,7 +10,7 @@
          },
          /*-------------------------------------------------------------------------------*/
          mostrarDatos: function(){
-             $("#mostrarTodos" ).click(function() {
+             $("#mostrarTodos").on('click', (e)=>{
                  obtenerDatos(1)
              })
              $("#submitButton").on('click', (e)=>{
